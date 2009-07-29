@@ -5,14 +5,13 @@
 
 Summary:	Gearman API for PHP
 Name:		php-%{modname}
-Version:	0.4.0
-Release:	%mkrel 2
+Version:	0.5.0
+Release:	%mkrel 1
 Group:		Development/PHP
 License:	PHP License
 URL:		http://pecl.php.net/package/gearman
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
 Source1:	%{modname}.ini
-Patch0:		gearman-0.4.0-format_not_a_string_literal_and_no_format_arguments.diff
 BuildRequires:	php-devel >= 3:5.2.1
 BuildRequires:	dos2unix
 BuildRequires:	gearman-devel
@@ -26,8 +25,6 @@ gearmand, and writing clients and workers.
 
 %setup -q -n %{modname}-%{version}
 [ "../package.xml" != "/" ] && mv ../package.xml .
-
-%patch0 -p0
 
 cp %{SOURCE1} %{inifile}
 
