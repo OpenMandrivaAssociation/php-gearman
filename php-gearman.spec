@@ -5,14 +5,13 @@
 
 Summary:	Gearman API for PHP
 Name:		php-%{modname}
-Version:	0.5.0
-Release:	%mkrel 2
+Version:	0.6.0
+Release:	%mkrel 1
 Group:		Development/PHP
 License:	PHP License
 URL:		http://pecl.php.net/package/gearman
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
 Source1:	%{modname}.ini
-Patch0:		gearman-0.4.0-format_not_a_string_literal_and_no_format_arguments.diff
 BuildRequires:	php-devel >= 3:5.2.1
 BuildRequires:	dos2unix
 BuildRequires:	gearman-devel
@@ -27,8 +26,6 @@ gearmand, and writing clients and workers.
 %setup -q -n %{modname}-%{version}
 [ "../package.xml" != "/" ] && mv ../package.xml .
 
-%patch0 -p0 -b .format_not_a_string_literal_and_no_format_arguments
-
 cp %{SOURCE1} %{inifile}
 
 find . -type d -exec chmod 755 {} \;
@@ -39,6 +36,9 @@ find -type f | grep -v ".gif" | grep -v ".png" | grep -v ".jpg" | xargs dos2unix
 
 # lib64 fix
 perl -pi -e "s|/lib\b|/%{_lib}|g" config.m4
+
+# fix version
+perl -pi -e "s|#define PHP_GEARMAN_VERSION \"0\.5\.0\"|#define PHP_GEARMAN_VERSION \"%{version}\"|g" php_gearman.h
 
 %build
 %serverbuild
@@ -79,4 +79,3 @@ rm -rf %{buildroot}
 %doc ChangeLog CREDITS README examples test_client.php test_worker.php package*.xml
 %config(noreplace) %attr(0644,root,root) %{_sysconfdir}/php.d/%{inifile}
 %attr(0755,root,root) %{_libdir}/php/extensions/%{soname}
-
