@@ -5,12 +5,13 @@
 
 Summary:	Gearman API for PHP
 Name:		php-%{modname}
-Version:	0.6.0
-Release:	%mkrel 4
+Version:	0.7.0
+Release:	%mkrel 0.0.r295852.1
 Group:		Development/PHP
 License:	PHP License
 URL:		http://pecl.php.net/package/gearman
-Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
+#Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
+Source0:	%{modname}.tar.gz
 Source1:	%{modname}.ini
 BuildRequires:	php-devel >= 3:5.2.1
 BuildRequires:	dos2unix
@@ -23,22 +24,22 @@ gearmand, and writing clients and workers.
 
 %prep
 
-%setup -q -n %{modname}-%{version}
-[ "../package.xml" != "/" ] && mv ../package.xml .
+%setup -q -n %{modname}
 
 cp %{SOURCE1} %{inifile}
 
 find . -type d -exec chmod 755 {} \;
 find . -type f -exec chmod 644 {} \;
 
+for i in `find . -type d -name .svn`; do
+    if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
+done
+
 # strip away annoying ^M
 find -type f | grep -v ".gif" | grep -v ".png" | grep -v ".jpg" | xargs dos2unix -U
 
 # lib64 fix
 perl -pi -e "s|/lib\b|/%{_lib}|g" config.m4
-
-# fix version
-perl -pi -e "s|#define PHP_GEARMAN_VERSION \"0\.5\.0\"|#define PHP_GEARMAN_VERSION \"%{version}\"|g" php_gearman.h
 
 %build
 %serverbuild
@@ -76,6 +77,6 @@ rm -rf %{buildroot}
 
 %files 
 %defattr(-,root,root)
-%doc ChangeLog CREDITS README examples test_client.php test_worker.php package*.xml
+%doc ChangeLog CREDITS README examples test_client.php test_worker.php
 %config(noreplace) %attr(0644,root,root) %{_sysconfdir}/php.d/%{inifile}
 %attr(0755,root,root) %{_libdir}/php/extensions/%{soname}
