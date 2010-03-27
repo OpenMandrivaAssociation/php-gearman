@@ -6,12 +6,11 @@
 Summary:	Gearman API for PHP
 Name:		php-%{modname}
 Version:	0.7.0
-Release:	%mkrel 0.0.r295852.1
+Release:	%mkrel 1
 Group:		Development/PHP
 License:	PHP License
 URL:		http://pecl.php.net/package/gearman
-#Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
-Source0:	%{modname}.tar.gz
+Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
 Source1:	%{modname}.ini
 BuildRequires:	php-devel >= 3:5.2.1
 BuildRequires:	dos2unix
@@ -24,7 +23,7 @@ gearmand, and writing clients and workers.
 
 %prep
 
-%setup -q -n %{modname}
+%setup -q -n %{modname}-%{version}
 
 cp %{SOURCE1} %{inifile}
 
