@@ -35,7 +35,7 @@ for i in `find . -type d -name .svn`; do
 done
 
 # strip away annoying ^M
-find -type f | grep -v ".gif" | grep -v ".png" | grep -v ".jpg" | xargs dos2unix -U
+find -type f | grep -v ".gif" | grep -v ".png" | grep -v ".jpg" | xargs dos2unix
 
 # lib64 fix
 perl -pi -e "s|/lib\b|/%{_lib}|g" config.m4
