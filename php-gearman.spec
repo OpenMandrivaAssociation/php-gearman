@@ -12,6 +12,11 @@ License:	PHP License
 URL:		https://pecl.php.net/package/gearman
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
 Source1:	%{modname}.ini
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	php-devel >= 3:5.2.1
 BuildRequires:	dos2unix
 BuildRequires:	gearman-devel
